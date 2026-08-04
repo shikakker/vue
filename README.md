@@ -1,35 +1,33 @@
-# Vue.js
+# Vue 3 Starter
 
-This directory is a brief example of a [Vue.js](https://vuejs.org/) app that can be deployed to Vercel with zero configuration.
+Minimal Vue 3 application used as a deployment and framework-learning example.
 
-## Deploy Your Own
+## Tech stack
 
-Deploy your own Vue.js project with Vercel.
+- Vue 3
+- Vue CLI 4
+- Babel
+- ESLint
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/vue&template=vue)
+## Getting started
 
-_Live Example: https://vue-template.vercel.app_
-
-## Running Locally
-
-```
+```bash
 yarn install
-```
-
-#### Compile and hot-reload for development
-
-```
 yarn serve
 ```
 
-#### Compile and minify for production
+## Scripts
 
-```
-yarn build
-```
+- `yarn serve` — start the development server with hot reload.
+- `yarn build` — create a production build.
+- `yarn lint` — run ESLint and apply supported fixes.
 
-#### Lint and fix files
+## Structure
 
-```
-yarn lint
-```
+- `src/App.vue` — root component.
+- `src/components/HelloWorld.vue` — example component.
+- `public/` — static document shell and favicon.
+
+## Status
+
+Starter/template repository, not a standalone product.
