@@ -14,3 +14,8 @@ test('Vue CLI build uses webpack-5-era tooling compatible with modern Node/OpenS
 test('Vue lint targets application source while Node contract tests run separately', () => {
   assert.equal(pkg.scripts?.lint, 'vue-cli-service lint src')
 })
+
+test('Vue runtime stays on the patched stable compiler boundary', () => {
+  assert.equal(pkg.dependencies?.vue, '3.5.42')
+  assert.equal(pkg.devDependencies?.['@vue/compiler-sfc'], '3.5.42')
+})
