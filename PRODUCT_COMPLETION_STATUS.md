@@ -1,6 +1,7 @@
 # Product Completion Status — vue
 
 Canonical branch: `ai/product-completion/vue`
+Canonical PR: `#3`
 Product boundary: Vue 3 single-page starter/reference. The branch repairs the real modern-Node build and dependency-security failures without inventing unrelated product functionality or changing frameworks.
 
 ## T01–T10 core tasks
@@ -14,9 +15,9 @@ Product boundary: Vue 3 single-page starter/reference. The branch repairs the re
 | T05 | DONE | Scoped Vue lint to application source while Node contract tests run separately. |
 | T06 | DONE | Regenerated and verified the Yarn lockfile under Node 22. |
 | T07 | DONE | Production build passes on the migrated toolchain. |
-| T08 | DONE | Production audit findings in old Vue compiler graph were reproduced. |
+| T08 | DONE | Production audit findings in old Vue compiler graph were reproduced and remediated. |
 | T09 | DONE | Runtime/compiler moved to stable Vue 3.5.42. |
-| T10 | PARTIAL | Exact final Vercel/browser smoke remains to be verified. |
+| T10 | BLOCKED | Exact final Vercel/browser smoke is blocked before build by Vercel deployment rate limiting. |
 
 ## I01–I10 improvements
 
@@ -29,8 +30,8 @@ Product boundary: Vue 3 single-page starter/reference. The branch repairs the re
 | I05 | DONE | Add high-severity production dependency audit to the permanent gate. |
 | I06 | DONE | Use guarded lockfile regeneration before generated dependency state is committed. |
 | I07 | DONE | Upgrade `@vue/compiler-sfc` with the Vue runtime to keep compiler/runtime versions aligned. |
-| I08 | PARTIAL | Re-run exact-head production audit after Vue 3.5.42 lock sync. |
-| I09 | PARTIAL | Hosted responsive/accessibility smoke requires the final READY preview. |
+| I08 | DONE | Exact status-head Quality run `35038919308` passes the production audit on Vue 3.5.42. |
+| I09 | BLOCKED | Hosted responsive/accessibility smoke requires a Vercel preview; deployment creation is rate limited. |
 | I10 | DEFERRED WITH REASON | No Vite rewrite: the repaired CLI 5 build is stable and stack replacement adds no validated product value. |
 
 ## F01–F10 product features
@@ -54,8 +55,12 @@ Historical Vercel deployment `dpl_HJM2LCUdNa5d6CWDqDSMWscJWmeM` failed under mod
 
 Guarded sync run `35038509118` passed contracts, lock regeneration, frozen reinstall, source lint and production build, committing verified lock state `174879546087706997e0fa7e635cf89a1a88ba35`.
 
-The permanent production audit then found high-severity `postcss`/`nanoid` paths through the older Vue compiler graph. A third RED contract required stable Vue/runtime compiler `3.5.42`; guarded sync run `35038735584` passed contracts, regenerated the lockfile, frozen-installed, linted, built, and committed verified lock state `546d4a8778659b30278db7d929b0d72d59953df2`. The permanent exact-head audit still must be observed after this status commit before DONE is claimed.
+The permanent production audit then found high-severity `postcss`/`nanoid` paths through the older Vue compiler graph. A third RED contract required stable Vue/runtime compiler `3.5.42`; guarded sync run `35038735584` passed contracts, regenerated the lockfile, frozen-installed, linted, built, and committed verified lock state `546d4a8778659b30278db7d929b0d72d59953df2`. Exact status-head Quality run `35038919308` then passed contracts, frozen install, source lint, production build and the high-severity production dependency audit.
+
+Exact completion head `fb865510b661dfd9cd51fcdbd66be4c7a1524de2` received GitHub Vercel status `failure` with the explicit description `Deployment rate limited — retry in 24 hours.` No deployment/build was created. This is an external delivery-capacity blocker, not the earlier webpack/OpenSSL application failure.
 
 No merge or production promotion is performed automatically.
 
-Status: **PARTIAL** — build migration is verified; exact-head security gate and hosted preview/browser evidence remain.
+BLOCKED ONLY BY: Vercel deployment build-rate capacity for exact-head preview/browser verification.
+
+Status: **BLOCKED** — code/build/lint/security gates are GREEN; exact-head hosted verification cannot run until Vercel accepts a preview build.
