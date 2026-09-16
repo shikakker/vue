@@ -10,3 +10,7 @@ test('Vue CLI build uses webpack-5-era tooling compatible with modern Node/OpenS
   assert.match(pkg.devDependencies?.['@vue/cli-plugin-eslint'] || '', /^[~^]?5\./)
   assert.doesNotMatch(pkg.scripts?.build || '', /openssl-legacy-provider/)
 })
+
+test('Vue lint targets application source while Node contract tests run separately', () => {
+  assert.equal(pkg.scripts?.lint, 'vue-cli-service lint src')
+})
