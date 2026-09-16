@@ -1,0 +1,43 @@
+name: Sync Vue lockfile
+
+on:
+  push:
+    branches: [ai/product-completion/vue]
+    paths:
+      - package.json
+      - .github/workflows/sync-lockfile.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ai/product-completion/vue
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - run: node --test tests/*.test.mjs
+      - name: Regenerate lockfile with the pinned package manager
+        run: yarn install --non-interactive
+      - name: Verify migrated dependency state
+        run: |
+          yarn install --frozen-lockfile --non-interactive
+          yarn lint
+          yarn build
+      - name: Commit verified lockfile
+        run: |
+          if git diff --quiet -- yarn.lock; then
+            echo 'yarn.lock already synchronized'
+            exit 0
+          fi
+          git config user.name 'Egor Denisov'
+          git config user.email 'designer.egor@ya.ru'
+          git add yarn.lock
+          git commit -m 'build: sync verified Vue lockfile'
+          git push origin HEAD:ai/product-completion/vue
